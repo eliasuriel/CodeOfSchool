@@ -1,0 +1,244 @@
+---
+title: "Evidencia_2"
+author: "Elías Uriel Velázquez A01639716"
+date: "26/4/2021"
+output: html_document
+---
+
+
+```{r}
+library(ape)  # read.GenBank
+library(Biostrings) # readDNAStringSet
+library(DECIPHER)   # OrientNucleotides
+library(seqinr)  # read.alignment
+library(adegenet) # table.paint
+library(viridis) # scale_color_viridis
+library(ggtree) # ggtree
+library(ggplot2)
+library(tinytex)
+library(ggmsa)
+
+
+```
+
+
+```{r}
+#ejemplo
+
+#humanos
+covid <-read.fasta("covid.fasta")
+variante1 <- read.fasta("variante1.fasta")#b.1.427
+variante2 <- read.fasta("variante2.fasta")#b.1.429
+variante3<-read.fasta("variante5.fasta")#b.1.1.7
+alphacorona <-read.fasta("alphacoronavirus.fasta")
+virus_cor <-read.fasta("virus_corona_1.fasta")
+ita<-read.fasta("corona_ita.fasta")
+uru<-read.fasta("coronoraury.fasta")
+france<-read.fasta("corona_france.fasta")
+austra<-read.fasta("corona_australia.fasta")
+
+china <-read.fasta("covid_china.fasta")
+byra <-read.fasta("covid_byra.fasta")
+united<-read.fasta("corona_united.fasta")
+africa<-read.fasta("corona_africa.fasta")
+taiwan<-read.fasta("corona_taiwan.fasta")
+peru<-read.fasta("corona_peru.fasta")
+egipto<-read.fasta("corona_egipto.fasta")
+surcorea<-read.fasta("corona_surcorea.fasta")
+chile<-read.fasta("corona_chile.fasta")
+beta<-read.fasta("betacorona.fasta")
+
+avian<-read.fasta("avian_virus.fasta")
+beluga<-read.fasta("beluga_corona.fasta")
+bovine<-read.fasta("bovine_corona.fasta")
+goose <-read.fasta("canada_goose.fasta")
+felino<-read.fasta("corona_felino.fasta")
+cerdo<-read.fasta("diarrea_cerdo_pedv.fasta")
+duck<-read.fasta("duck_corona.fasta")
+gastro_cerdo<-read.fasta("gastro_cerdo.fasta")
+rabbit<-read.fasta("rabbit_corona.fasta")
+marina<-read.fasta("murine_hepa.fasta")
+
+#30
+
+
+
+
+
+
+
+
+# longitud de la secuencia
+length(covid[[1]])
+length(variante1[[1]])
+length(variante2[[1]])
+length(variante3[[1]])
+length(alphacorona[[1]])
+length(virus_cor[[1]])
+length(ita[[1]])
+length(uru[[1]])
+length(france[[1]])
+length(austra[[1]])
+
+
+length(china[[1]])
+length(byra[[1]])
+length(united[[1]])
+length(africa[[1]])
+length(taiwan[[1]])
+length(peru[[1]])
+length(egipto[[1]])
+length(surcorea[[1]])
+length(chile[[1]])
+length(beta[[1]])
+
+#animales
+length(avian[[1]])
+length(beluga[[1]])
+length(bovine[[1]])
+length(goose[[1]])
+length(felino[[1]])
+length(cerdo[[1]])
+length(duck[[1]])
+length(gastro_cerdo[[1]])
+length(rabbit[[1]])
+length(marina[[1]])
+
+
+#comparar graficas
+compara <- function(seq1,seq2,seq3,seq4,seq5,seq6,seq7,seq8,seq9,seq10){
+  par(mfrow=c(1,2))
+  barplot(table(seq1), col = 1:4)
+  barplot(table(seq2), col = 1:4)
+  barplot(table(seq3), col = 1:4)
+  barplot(table(seq4), col = 1:4)
+  barplot(table(seq5), col = 1:4)
+  barplot(table(seq6), col = 1:4)
+  barplot(table(seq7), col = 1:4)
+  barplot(table(seq8), col = 1:4)
+  barplot(table(seq9), col = 1:4)
+  barplot(table(seq10), col = 1:4)
+  
+}
+
+compara2 <- function(seq1,seq2,seq3,seq4,seq5,seq6,seq7,seq8,seq9,seq10){
+  par(mfrow=c(1,2))
+  barplot(table(seq1), col = 1:4)
+  barplot(table(seq2), col = 1:4)
+  barplot(table(seq3), col = 1:4)
+  barplot(table(seq4), col = 1:4)
+  barplot(table(seq5), col = 1:4)
+  barplot(table(seq6), col = 1:4)
+  barplot(table(seq7), col = 1:4)
+  barplot(table(seq8), col = 1:4)
+  barplot(table(seq9), col = 1:4)
+  barplot(table(seq10), col = 1:4)
+  
+}
+
+compara(covid,variante1,variante2,variante3,alphacorona,virus_cor,ita,uru,france,austra)
+compara2(avian,beluga,bovine,goose,felino,cerdo,duck,gastro_cerdo,rabbit,marina)
+compara2(china,byra,united,africa,taiwan,peru,egipto,surcorea,chile,beta)
+
+```
+
+
+
+```{r}
+virus <- c(  "NC_002645", "MT641660", "MT470132", "MW642250", "MW988205", "NC_045512","MW963407","MW901683","MT470133","FR988030","NC_006577","NC_001451","NC_010646","NC_003045","NC_046965","NC_002306","NC_003436","NC_048214","NC_038861","NC_048217","NC_017083","NC_045512","MZ026889","OD910854","MW981442","MZ020645","MW938089","MW828631","MZ004107","MW672141")
+
+```
+
+## 2. Obtén las secuencias:
+```{r}
+virus_sequences <- read.GenBank(virus)
+```
+
+## 3. Estructura del DNABin:
+```{r}
+str(virus_sequences)
+attributes(virus_sequences)
+names(virus_sequences)
+attr(virus_sequences, "species")
+```
+## 4. Concentraremos en un archivo todas las secuencias:
+```{r}
+write.dna(virus_sequences,  file ="virus_seqs.fasta", format = "fasta", append =
+FALSE, nbcol = 6, colsep = " ", colw = 10)
+```
+
+## 5. Cargamos la secuencias:
+```{r}
+virus_seq_not_align <- readDNAStringSet("virus_seqs.fasta", format = "fasta")
+```
+
+## 6 alineamiento
+
+```{r}
+virus_seq_not_align <- OrientNucleotides(virus_seq_not_align)
+
+virus_seq_align <- AlignSeqs(virus_seq_not_align)
+```
+
+## 7. Visualizar el resultado del alineamiento:
+```{r}
+BrowseSeqs(virus_seq_align, highlight=0)
+```
+
+
+## 8. Guardar el resultado:
+```{r}
+writeXStringSet(virus_seq_align, file="virus_seq_align.fasta")
+```
+
+## 9. Obtener el nuevo archivo:
+```{r}
+virus_aligned <- read.alignment("virus_seq_align.fasta", format = "fasta")
+```
+
+## 10. Crear una matriz de distancia:
+```{r}
+matriz_distancia <- dist.alignment(virus_aligned, matrix = "similarity")
+
+```
+
+## 12. Creación del árbol con el paquete ape:
+```{r}
+virus_tree <- nj(matriz_distancia)
+class(virus_tree) 
+
+virus_tree <- ladderize(virus_tree)
+
+```
+
+## 13. Plot del árbol:
+```{r}
+plot(virus_tree, cex = 0.6)
+
+```
+
+
+#5
+##interpretacion escrita de los arboles filogeneticos:
+
+"En el árbol, se puede como las diferentes variaciones de los virus se dividen, los que están abajo a la izquierda están más relacionados entre sí, porque las variaciones entre ellos son menores, pero aun así entre ellos se dividen más ramas, ya que aunque estén muy parecidos siempre hay algo que los hace diferentes a los demás y por eso solo unos cuantos están dentro de una misma ultima rama, estos son los que son más parecidos entre sí y se puede relacionar ya que la mayoría de los que están abajo a la izquierda son los coronavirus de los animales, entonces se puede ver que el coronavirus entre ellos no varía tanto y algunos animales les pueden dar diferentes variaciones, en cambio los que están arriba a la izquierda casi todos están en diferentes ramas esto se debe a su relación, solo algunos cuantos están en la misma ultima rama como el caso de los MW, MZ,NC, entre estos tres no se relacionan tantos, pero dentro de ellos hay más en donde sus variaciones son menores ya que tienen más relación entre si , y ahí se puede ver que los que están más relacionados son los que son del mismo continente, ya que cuando cambia la variación es mayor y entonces no sé relacionan tanto, por lo que al final, los que están dentro de varios tipo de ramas y quedan más pegados son que no varían tanto entre sí y tienen más relación."
+
+##Link del video 
+(https://youtu.be/o6xLYQBogR4)
+
+##Referencias
+
+El trabajo de [Ren, L. (s. f.). Corrigendum to «genetic evolution analysis of 2019 novel coronavirus and coronavirus from other species» Infect. Genet. Evol. 82 (2020) 104285]. PubMed. Recuperado 29 de abril de 2021,de](https://pubmed.ncbi.nlm.nih.gov/33268270/) 
+
+El trabajo de [Gouilh, M. A. (s. f.). SARS-CoV related Betacoronavirus and diverse Alphacoronavirus members found in western old-world. PubMed. Recuperado 29 de abril de 2021, de]
+(https://pubmed.ncbi.nlm.nih.gov/29482919/)
+
+El trabajo de[Dong, S. (s. f.). A guideline for homology modeling of the proteins from newly discovered betacoronavirus, 2019 novel coronavirus (2019-nCoV). PubMed. Recuperado 29 de abril de 2021, de]
+(https://pubmed.ncbi.nlm.nih.gov/32181901/)
+
+El trabajo de[Fadhilah, A. S. (s. f.). Molecular and pathogenicity of infectious bronchitis virus (Gammacoronavirus) in Japanese quail (Coturnix japonica). PubMed. Recuperado 29 de abril de 2021, de]
+(https://pubmed.ncbi.nlm.nih.gov/32475428/)
+
+El trabajo de[NCBI Virus. (s. f.). NCBI. Recuperado 29 de abril de 2021, de https]
+(//www.ncbi.nlm.nih.gov/labs/virus/vssi/#/virus?SeqType_s=Nucleotide&VirusLineage_ss=Severe%20acute%20respiratory%20syndrome%20coronavirus%202,%20taxid:2697049&Completeness_s=complete)
+
