@@ -1,0 +1,10 @@
+﻿  act2.3.cpp
+C:\Users\elias\OneDrive\Documentos\cmasmas\act2.3\act2.3\act2.3\act2.3.cpp(89,23): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\elias\OneDrive\Documentos\cmasmas\act2.3\act2.3\act2.3\act2.3.cpp(112,23): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\elias\OneDrive\Documentos\cmasmas\act2.3\act2.3\act2.3\act2.3.cpp(258,23): warning C4018: '<': no coinciden signed/unsigned
+  Funciones.cpp
+C:\Users\elias\OneDrive\Documentos\cmasmas\act2.3\act2.3\act2.3\Funciones.cpp(8,16): warning C4018: '<=': no coinciden signed/unsigned
+C:\Users\elias\OneDrive\Documentos\cmasmas\act2.3\act2.3\act2.3\Funciones.cpp(9,21): warning C4018: '<=': no coinciden signed/unsigned
+C:\Users\elias\OneDrive\Documentos\cmasmas\act2.3\act2.3\act2.3\Funciones.cpp(77,41): warning C4101: 'valorCentral2': variable local sin referencia
+  Generando código...
+  act2.3.vcxproj -> C:\Users\elias\OneDrive\Documentos\cmasmas\act2.3\act2.3\Debug\act2.3.exe
