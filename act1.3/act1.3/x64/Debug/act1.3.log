@@ -1,0 +1,6 @@
+﻿  act1.3.cpp
+C:\Users\elias\OneDrive\Documentos\cmasmas\act1.3\act1.3\act1.3.cpp(136,66): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\elias\OneDrive\Documentos\cmasmas\act1.3\act1.3\act1.3.cpp(149,71): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\elias\OneDrive\Documentos\cmasmas\act1.3\act1.3\act1.3.cpp(173,78): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\elias\OneDrive\Documentos\cmasmas\act1.3\act1.3\act1.3.cpp(200,79): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
+  act1.3.vcxproj -> C:\Users\elias\OneDrive\Documentos\cmasmas\act1.3\x64\Debug\act1.3.exe

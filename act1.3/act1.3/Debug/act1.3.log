@@ -1,0 +1,6 @@
+﻿  act1.3.cpp
+C:\Users\elias\OneDrive\Documentos\cmasmas\act2.3\act1.3\act1.3\act1.3.cpp(136,23): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\elias\OneDrive\Documentos\cmasmas\act2.3\act1.3\act1.3\act1.3.cpp(158,23): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\elias\OneDrive\Documentos\cmasmas\act2.3\act1.3\act1.3\act1.3.cpp(183,23): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\elias\OneDrive\Documentos\cmasmas\act2.3\act1.3\act1.3\act1.3.cpp(218,27): warning C4018: '<': no coinciden signed/unsigned
+  act1.3.vcxproj -> C:\Users\elias\OneDrive\Documentos\cmasmas\act2.3\act1.3\Debug\act1.3.exe
