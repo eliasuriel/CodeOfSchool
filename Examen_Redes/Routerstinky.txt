@@ -1,0 +1,103 @@
+!clock set 17:55:00 28 NOV 2022
+
+hostname Routerstinky
+
+username cisco secret cisco
+enable secret class
+
+banner motd #AP_Prohibido entrar a este
+router sin autorizacion !!!#
+
+line con 0
+password cisco
+login local
+logging synchronous
+exec-timeout 5
+
+line vty 0 15
+password cisco
+login local
+logging synchronous
+exec-timeout 5
+
+service password-encryption
+
+default interface gigabit 0/0
+interface gigabit 0/0
+no ip address
+description Troncal
+no shutdown
+
+interface gigabit 0/0.10
+encapsulation dot1Q 10
+description VlanXA
+ip address 172.15.1.6 255.255.255.248
+ip nat inside
+
+interface gigabit 0/0.20
+encapsulation dot1Q 20
+description VlanYB
+ip address 172.15.1.14 255.255.255.248
+ip nat inside
+
+interface gigabit 0/0.30
+encapsulation dot1Q 30
+description VlanYC
+ip address 172.15.1.22 255.255.255.248
+ip nat inside
+
+interface gigabit 0/0.40
+encapsulation dot1Q 40
+description Admin
+ip address 172.15.1.30 255.255.255.248
+ip nat inside
+
+interface gigabit 0/1
+ip address dhcp
+description Internet
+no shutdown
+ip nat outside
+ip access-group 102 out
+
+interface serial 0/0/0
+ip address 192.168.0.2 255.255.255.252
+description A Routdolfo
+no shutdown
+ip nat inside
+
+ip dhcp excluded-address 172.15.1.6
+ip dhcp pool VlanXA
+network 172.15.1.0 255.255.255.248
+default-router 172.15.1.6
+dns-server 8.8.8.8
+
+ip dhcp excluded-address 172.15.1.14
+ip dhcp pool VlanYB
+network 172.15.1.8 255.255.255.248
+default-router 172.15.1.14
+dns-server 8.8.8.8
+
+ip dhcp excluded-address 172.15.1.22
+ip dhcp pool VlanYC
+network 172.15.1.16 255.255.255.248
+default-router 172.15.1.22
+dns-server 8.8.8.8
+
+ip route 0.0.0.0 0.0.0.0 G0/1
+
+time-range time-ssh
+periodic daily 17:00 to 18:00
+
+access-list 102 remark Minecraft deny-ssh
+access-list 102 deny tcp any any eq 25565 time-range time-ssh
+access-list 102 permit ip any any
+
+access-list 101 remark Vlans
+access-list 101 permit ip 172.15.1.0 0.0.0.31 any
+
+ip nat inside source list 101 interface G0/1 overload
+
+router eigrp 2
+network 172.15.1.0 0.0.0.31
+network 192.168.0.0
+no auto-summary

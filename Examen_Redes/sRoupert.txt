@@ -1,0 +1,61 @@
+hostname sRoupert
+
+username cisco secret cisco
+enable secret class
+
+line con 0
+password cisco
+login local
+logging synchronous
+exec-timeout 5
+
+line vty 0 15
+password cisco
+login local
+logging synchronous
+exec-timeout 5
+
+service password-encryption
+
+banner motd #Prohibido entrar a este
+switch sin autorizacion !!!#
+
+interface Vlan1
+no ip address
+shutdown
+no ip default-gateway
+
+vlan 10
+name VlanXA
+
+vlan 20
+name VlanYB
+
+vlan 30
+name VlanYC
+
+interface Vlan40
+description vlan admin
+ip add 172.15.1.25 255.255.255.248
+no shutdown
+ip default-gateway 172.15.1.30
+
+interface fast0/2
+description vlan 10 vlanXA
+switchport mode access
+switchport access vlan 10
+
+interface fast0/3
+description vlan 30 vlanYC
+switchport mode access
+switchport access vlan 30
+
+interface fast0/4
+description vlan 20 vlanYB
+switchport mode access
+switchport access vlan 20
+
+interface fast0/1
+description Al router
+switchport mode trunk
+no shutdown
